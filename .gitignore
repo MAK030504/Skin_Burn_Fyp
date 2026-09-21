@@ -1,0 +1,15 @@
+# Dataset images and archives — keep scripts and inventory
+datasets/*
+!datasets/README.md
+!datasets/*.py
+
+__pycache__/
+*.pyc
+.env
+.kaggle/
+
+# Office lock files
+~$*
+
+# Local unpacker binary
+tools/7zip/
