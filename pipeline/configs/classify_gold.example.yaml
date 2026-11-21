@@ -1,0 +1,49 @@
+# Retrain on clinician-reviewed labels without changing the trainer.
+#
+# Folder layout (subfolder name = class):
+#   datasets/gold/first/
+#   datasets/gold/second/
+#   datasets/gold/third/
+#
+# Or a CSV instead of folders. Replace the source block with:
+#   source:
+#     kind: csv
+#     path: datasets/gold/labels.csv
+# CSV columns: image_path, degree
+# degree must be one of: first, second, third
+# image_path is relative to the repository root.
+
+name: gold_degree
+task: classify_degree
+label_note: >
+  Labels are the clinician-reviewed degree set. Report this run separately
+  from the public last-databurn baseline.
+
+classes: [first, second, third]
+seed: 42
+split:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+
+source:
+  kind: folder
+  root: datasets/gold
+  label_map:
+    first: first
+    second: second
+    third: third
+
+image:
+  size: 224
+  min_short_side: 0
+
+train:
+  backbone: resnet18
+  pretrained: true
+  epochs: 12
+  patience: 4
+  batch_size: 16
+  lr: 0.0001
+  weight_decay: 0.0001
+  num_workers: 0
