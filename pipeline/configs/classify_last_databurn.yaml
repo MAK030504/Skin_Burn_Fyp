@@ -1,0 +1,40 @@
+# First training source: Kaggle last-databurn degree folders.
+# These labels are public folder names, not a clinician review.
+# When the reviewed set is ready, train again with classify_gold.example.yaml.
+# The trainer, splits, and metrics stay the same.
+
+name: last_databurn_degree
+task: classify_degree
+label_note: >
+  Labels are the Kaggle last-databurn folder names (1st / 2nd / 3rd degree).
+  They are not clinician-verified. Do not report this run as clinical accuracy.
+  Retrain with the gold config when reviewed labels replace this source.
+
+classes: [first, second, third]
+seed: 42
+split:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+
+source:
+  kind: folder
+  root: datasets/kaggle/last-databurn/last_databurn
+  label_map:
+    "1st degree": first
+    "2nd degree": second
+    "3nd degree": third
+
+image:
+  size: 224
+  min_short_side: 0
+
+train:
+  backbone: resnet18
+  pretrained: true
+  epochs: 8
+  patience: 3
+  batch_size: 32
+  lr: 0.0003
+  weight_decay: 0.0001
+  num_workers: 0
