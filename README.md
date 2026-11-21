@@ -297,7 +297,8 @@ This is still early. At the time this README was written:
 - Title-defence slides and official roadmap exist under `Documenations/`.
 - Scope document exists (`SDP - Scope Document .docx`).
 - Public datasets have been downloaded into `datasets/`.
-- Application code (training pipeline, API, UI) is **not** the main body of the repo yet — that is Weeks 4–12 of the roadmap.
+- A first classification pipeline is in `pipeline/`. It trains a ResNet-18 on the Kaggle last-databurn degree folders (public folder labels). The same command retrains when clinician-reviewed labels replace that source. See [`pipeline/README.md`](pipeline/README.md).
+- Segmentation, severity, recovery, API, and UI are still ahead (Weeks 5–12).
 
 If you clone this repo and expect a running web app immediately, you will not find one until those milestones land.
 
@@ -330,6 +331,11 @@ Official plan: **14 weeks from 23 June 2026**. Dataset quality is the named prim
 Skin_Burn_Fyp/
 ├── README.md                 ← you are here
 ├── .gitignore
+├── pipeline/                 ← degree-classification train / eval / predict
+│   ├── burnpipe/
+│   └── configs/
+├── run_pipeline.py
+├── runs/                     ← training outputs (gitignored)
 ├── datasets/                 ← images and download scripts (gitignored contents)
 │   ├── README.md
 │   ├── download_all.py
@@ -359,6 +365,8 @@ Large image archives are listed in `.gitignore` (`datasets/`) so they are not co
 | Roadmap | `Documenations/FYP_Roadmap.pdf` | Week-by-week plan |
 | Scope | `Documenations/SDP - Scope Document .docx` | Formal objectives and roles |
 | Dataset inventory | `datasets/README.md` | What was downloaded and how |
+| Next steps | `Documenations/Next_Steps.md` | Build order from the current baseline |
+| Branch rules | `CONTRIBUTING.md` | `dev`, `main`, and pull requests |
 
 If the scope document and this README disagree on **clinical claims**, prefer this README’s conservative wording (prototype, decision support, no outcome claims). If they disagree on **dates or deliverables**, prefer the official roadmap PDF.
 
@@ -386,3 +394,7 @@ If the scope document and this README disagree on **clinical claims**, prefer th
 3. Inspect `datasets/README.md` before training anything.
 4. Treat Week 2 (stack freeze) and Week 3 (clean splits) as the real start of modelling.
 5. When writing results, name the dataset, the task, and the limitation in the same sentence.
+
+## 17. How we branch
+
+`main` and `dev` both reject direct pushes. Daily work is a personal branch (`mustafa/short-topic`, `abdur/short-topic`) opened as a pull request into `dev`. `main` changes only when `dev` is merged in to freeze a milestone. Commands and the protection rules are in [`CONTRIBUTING.md`](CONTRIBUTING.md). The build order from here is [`Documenations/Next_Steps.md`](Documenations/Next_Steps.md).
